@@ -1,0 +1,62 @@
+{% extends 'index.html' %} {% block title %}Lista de Cursos{% endblock %} {% block content %}{% load static %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Lista de Cursos</h1>
+    <p class="mb-4">Aquí puedes ver todos los cursos disponibles.</p>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Cursos</h6>
+            <a href="{% url 'agregar_curso' %}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Agregar Curso</span>
+            </a>
+        </div>
+        <div class="card-body">
+            {% if courses %}
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Miniatura</th>
+                            <th>Título del Curso</th>
+                            <th>Descripción</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td>
+                                {% if course.materials.first.thumbnail %}
+                                <img src="{{ course.materials.first.thumbnail.url }}" alt="Miniatura" width="100">
+                                <!--LLLLL -->{% endif %}
+                            </td>
+                            <td>{{ course.title }}</td>
+                            <td>{{ course.description }}</td>
+                            <td>{{ course.start_date }}</td>
+                            <td>
+                                <a href="{% url 'course_detail' course.pk %}" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'editar_curso' course.pk %}" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'eliminar_curso' course.pk %}" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No hay cursos disponibles.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

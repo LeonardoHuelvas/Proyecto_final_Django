@@ -1,0 +1,29 @@
+{% extends 'index.html' %} {% block title %}Crear Instructor{% endblock %} {% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">{% if form.instance.pk %}Editar Instructor{% else %}Agregar Instructor{% endif %}
+    </h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{% if form.instance.pk %}Editar Instructor{% else %}Agregar
+                Instructor{% endif %}</h6>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %} {{ form.as_p }}
+                <button type="submit" class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-save"></i>
+                    </span>
+                    <span class="text">Guardar</span>
+                </button>
+                <a href="{% url 'instructor_list' %}" class="btn btn-secondary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="text">Volver</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

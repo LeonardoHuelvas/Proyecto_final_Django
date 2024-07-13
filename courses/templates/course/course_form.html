@@ -1,0 +1,59 @@
+{% extends 'index.html' %} {% block title %}Lista de Cursos{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{% if course.pk %}Editar Curso{% else %}Agregar Curso{% endif %}</h1>
+
+    <!-- Course Form -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{% if course.pk %}Editar Curso{% else %}Agregar
+                        Curso{% endif %}</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %} {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-save"></i>
+                            </span>
+                            <span class="text">Guardar</span>
+                        </button>
+                        <a href="{% url 'course_list' %}" class="btn btn-secondary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-left"></i>
+                            </span>
+                            <span class="text">Volver</span>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Progreso</h6>
+                </div>
+                <div class="card-body">
+                    <p>Completa todos los campos requeridos para guardar el curso.</p>
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="small mb-0">Asegúrate de revisar todos los campos antes de guardar.</p>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Ayuda Rápida</h6>
+                </div>
+                <div class="card-body">
+                    <p>Para más información sobre cómo completar este formulario, visita nuestra <a href="#">sección de
+                            ayuda</a> o contacta al soporte técnico.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

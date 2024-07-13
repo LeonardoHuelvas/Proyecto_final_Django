@@ -1,0 +1,140 @@
+{% extends 'index.html' %} {% load static %} {% block title %}Foros{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Foros del curso {{ course.title }}</h1>
+        <a href="{% url 'forum_create' course.id %}" class="btn btn-primary">Crear Foro</a>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+        {% for forum in forums %}
+        <div class="timeline-item">
+            <div class="timeline-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="timeline-content">
+                <h5 class="timeline-title">{{ forum.title }}</h5>
+                <p class="timeline-description">{{ forum.description }}</p>
+                <a href="{% url 'forum_detail' forum.id %}" class="btn btn-info btn-sm">Ver Foro</a>
+                <div class="timeline-posts">
+                    {% for post in forum.posts.all %}
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="{% if post.created_by.profile_picture %}{{ post.created_by.profile_picture.url }}{% else %}{% static 'img/undraw_profile.svg' %}{% endif %}" alt="" width="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ post.created_by.username }}</h5>
+                            <p>{{ post.content }}</p>
+                            <small class="text-muted">Publicado en {{ post.created_at }}</small>
+                        </div>
+                    </div>
+                    <hr> {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Custom CSS for Timeline -->
+<style>
+    .timeline {
+        position: relative;
+        padding: 20px 0;
+        list-style: none;
+    }
+    
+    .timeline:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+        left: 40px;
+        margin-right: -1.5px;
+    }
+    
+    .timeline-item {
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .timeline-item:before,
+    .timeline-item:after {
+        content: '';
+        display: table;
+    }
+    
+    .timeline-item:after {
+        clear: both;
+    }
+    
+    .timeline-icon {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        color: #6c757d;
+    }
+    
+    .timeline-content {
+        position: relative;
+        margin-left: 60px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+    }
+    
+    .timeline-title {
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
+    
+    .timeline-description {
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #6c757d;
+    }
+    
+    .timeline-posts {
+        margin-top: 20px;
+    }
+    
+    .media {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .media-body {
+        flex: 1;
+    }
+    
+    .media img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    
+    .media-body h5 {
+        margin-top: 0;
+    }
+    
+    .media-body small {
+        color: #6c757d;
+    }
+    
+    .timeline .btn-info {
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}

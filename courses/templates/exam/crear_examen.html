@@ -1,0 +1,146 @@
+{% extends 'index.html' %} {% block title %}Crear Examen{% endblock %} {% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Crear Nuevo Examen para {{ course.title }}</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Detalles del Examen</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Título del Examen:</label>
+                    <input type="text" class="form-control" id="id_title" name="title" placeholder="Título del Examen">
+                </div>
+                <div class="form-group">
+                    <label for="id_total_marks">Puntaje Total:</label>
+                    <input type="number" class="form-control" id="id_total_marks" name="total_marks" placeholder="Puntaje Total">
+                </div>
+
+                <div id="questions_container">
+                    <h3 class="h5 mb-3">Agregar Pregunta</h3>
+                    <div class="form-group">
+                        <label for="id_question_text">Texto de la Pregunta:</label>
+                        <input type="text" class="form-control" id="id_question_text" name="question_text" placeholder="Texto de la Pregunta">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_question_type">Tipo de Pregunta:</label>
+                        <select class="form-control" id="id_question_type" name="question_type">
+                            <option value="text">Texto</option>
+                            <option value="multiple_choice">Selección Múltiple</option>
+                        </select>
+                    </div>
+
+                    <div id="multiple_choice_options" style="display: none;">
+                        <label>Opciones de Respuesta:</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="option1" placeholder="Opción 1">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="option2" placeholder="Opción 2">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="option3" placeholder="Opción 3">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="option4" placeholder="Opción 4">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="option5" placeholder="Opción 5">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_correct_option">Opción Correcta:</label>
+                            <select class="form-control" id="id_correct_option" name="correct_option">
+                                <option value="1">Opción 1</option>
+                                <option value="2">Opción 2</option>
+                                <option value="3">Opción 3</option>
+                                <option value="4">Opción 4</option>
+                                <option value="5">Opción 5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-secondary mb-3" id="add_question_btn">Agregar Otra Pregunta</button>
+                <button type="submit" class="btn btn-primary">Guardar Examen</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Manejar la visibilidad de las opciones de respuesta múltiple según el tipo de pregunta seleccionada
+    document.getElementById('id_question_type').addEventListener('change', function() {
+        var questionType = this.value;
+        if (questionType === 'multiple_choice') {
+            document.getElementById('multiple_choice_options').style.display = 'block';
+        } else {
+            document.getElementById('multiple_choice_options').style.display = 'none';
+        }
+    });
+
+    // Añadir funcionalidad para agregar múltiples preguntas
+    document.getElementById('add_question_btn').addEventListener('click', function() {
+        var container = document.getElementById('questions_container');
+        var questionIndex = container.querySelectorAll('.form-group').length / 2;
+
+        var questionHtml = `
+            <div class="form-group">
+                <label for="id_question_text_${questionIndex}">Texto de la Pregunta:</label>
+                <input type="text" class="form-control" id="id_question_text_${questionIndex}" name="question_text" placeholder="Texto de la Pregunta">
+            </div>
+            <div class="form-group">
+                <label for="id_question_type_${questionIndex}">Tipo de Pregunta:</label>
+                <select class="form-control question_type_select" id="id_question_type_${questionIndex}" name="question_type">
+                    <option value="text">Texto</option>
+                    <option value="multiple_choice">Selección Múltiple</option>
+                </select>
+            </div>
+            <div id="multiple_choice_options_${questionIndex}" class="multiple_choice_options" style="display: none;">
+                <label>Opciones de Respuesta:</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="option1" placeholder="Opción 1">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="option2" placeholder="Opción 2">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="option3" placeholder="Opción 3">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="option4" placeholder="Opción 4">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="option5" placeholder="Opción 5">
+                </div>
+                <div class="form-group">
+                    <label for="id_correct_option_${questionIndex}">Opción Correcta:</label>
+                    <select class="form-control" id="id_correct_option_${questionIndex}" name="correct_option">
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                        <option value="3">Opción 3</option>
+                        <option value="4">Opción 4</option>
+                        <option value="5">Opción 5</option>
+                    </select>
+                </div>
+            </div>
+        `;
+
+        var newDiv = document.createElement('div');
+        newDiv.innerHTML = questionHtml;
+        container.appendChild(newDiv);
+
+        // Añadir evento de cambio para las nuevas selecciones de tipo de pregunta
+        newDiv.querySelector('.question_type_select').addEventListener('change', function() {
+            var questionType = this.value;
+            var optionsDiv = newDiv.querySelector('.multiple_choice_options');
+            if (questionType === 'multiple_choice') {
+                optionsDiv.style.display = 'block';
+            } else {
+                optionsDiv.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

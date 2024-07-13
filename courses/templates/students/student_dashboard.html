@@ -1,0 +1,98 @@
+{% extends "index.html" %} {% block title %}Dashboard del Estudiante{% endblock %} {% block content %}
+<style>
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card img {
+        width: 100%;
+        height: 150PX;
+        object-fit: cover;
+    }
+    
+    .card-body {
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .card-text {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        height: 50px;
+        overflow: hidden;
+        color: #666;
+    }
+    
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        padding: 8px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 0.9rem;
+        border-radius: 25px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-1px);
+    }
+</style>
+
+<div class="container">
+    <h2 class="mb-4">Bienvenido, {{ user.username }}!</h2>
+    <p>Este es tu panel de control de estudiante. Aquí puedes ver tus cursos inscritos y materiales.</p>
+    <h3 class="my-4">Mis Cursos Inscritos</h3>
+    <div class="row">
+        {% for course in enrolled_courses %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-img-top">
+                    {% if course.image %}
+                    <img src="{{ course.image.url }}" class="card-img" alt="{{ course.title }}"> {% elif course.get_youtube_thumbnail %}
+                    <img src="{{ course.get_youtube_thumbnail }}" class="card-img" alt="{{ course.title }}"> {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                    <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">Ver Curso</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-md-12">
+            <div class="alert alert-info" role="alert">
+                No estás inscrito en ningún curso.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'course_list' %}" class="btn btn-primary mt-3">Ver Todos los Cursos</a>
+</div>
+{% endblock %}

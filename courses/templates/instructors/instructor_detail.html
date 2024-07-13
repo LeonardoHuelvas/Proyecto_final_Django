@@ -1,0 +1,27 @@
+{% extends 'index.html' %} {% block title %}Detalles del Instructor{% endblock %} {% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Detalles del Instructor</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{ instructor.get_full_name }}</h6>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{ instructor.get_full_name }}</p>
+            <p><strong>Correo Electrónico:</strong> {{ instructor.email }}</p>
+            <p><strong>Fecha de Registro:</strong> {{ instructor.date_joined }}</p>
+            <a href="{% url 'instructor_edit' instructor.pk %}" class="btn btn-warning btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-edit"></i>
+                </span>
+                <span class="text">Editar</span>
+            </a>
+            <a href="{% url 'instructor_list' %}" class="btn btn-secondary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Volver</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

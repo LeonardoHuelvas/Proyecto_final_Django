@@ -1,0 +1,65 @@
+{% extends 'index.html' %} {% block title %}Lista de Materiales{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Lista de Materiales</h1>
+    <p class="mb-4">Aquí puedes ver todos los materiales subidos para los cursos.</p>
+
+    <!-- Material List -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Materiales</h6>
+            <a href="{% url 'material_add' %}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Agregar Material</span>
+            </a>
+        </div>
+        <div class="card-body">
+            {% if materials %}
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Curso</th>
+                            <th>Tipo de Archivo</th>
+                            <th>Fecha de Subida</th>
+                            <th>Miniatura</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for material in materials %}
+                        <tr>
+                            <td>{{ material.title }}</td>
+                            <td>{{ material.course.title }}</td>
+                            <td>{{ material.file_type }}</td>
+                            <td>{{ material.uploaded_at }}</td>
+                            <td>
+                                {% if material.video_url %}
+                                <img src="{{ material.get_video_thumbnail }}" alt="Thumbnail" width="100"> {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'material_detail' material.pk %}" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'material_edit' material.pk %}" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'material_delete' material.pk %}" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No hay materiales disponibles.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

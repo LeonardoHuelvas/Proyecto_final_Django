@@ -1,0 +1,8 @@
+{% extends "index.html" %} {% block title %}Dashboard del Administrador{% endblock %} {% block content %}
+<div class="container">
+    <h2>Bienvenido, {{ user.username }}!</h2>
+    <p>Este es tu panel de control de administrador. Aquí puedes gestionar usuarios, cursos y materiales.</p>
+    <a href="{% url 'course_list' %}" class="btn btn-primary">Ver Cursos</a>
+    <a href="{% url 'instructor_list' %}" class="btn btn-secondary">Ver Instructores</a>
+</div>
+{% endblock %}

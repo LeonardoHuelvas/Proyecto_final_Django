@@ -1,0 +1,32 @@
+{% extends 'index.html' %} {% block title %}Detalle del Material{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Detalle del Material</h1>
+    <p class="mb-4">Aquí puedes ver los detalles del material seleccionado.</p>
+
+    <!-- Material Detail -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{ material.title }}</h6>
+        </div>
+        <div class="card-body">
+            <p><strong>Curso:</strong> {{ material.course.title }}</p>
+            <p><strong>Tipo de Archivo:</strong> {{ material.file_type }}</p>
+            <p><strong>Fecha de Subida:</strong> {{ material.uploaded_at }}</p>
+            {% if material.file %}
+            <p><strong>Archivo:</strong> <a href="{{ material.file.url }}" download>Descargar</a></p>
+            {% endif %} {% if material.video %}
+            <p><strong>Video:</strong></p>
+            <video width="320" height="240" controls>
+                <source src="{{ material.video.url }}" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video> {% endif %}
+
+            <!-- Enlace para crear exámenes -->
+            {% if user.is_authenticated and user.role == 'instructor' and material.course.instructor == user %}
+            <a href="{% url 'crear_examen' material.course.id %}" class="btn btn-primary mt-3">Crear Examen</a> {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'material_list' %}" class="btn btn-secondary mt-3">Volver</a>
+</div>
+{% endblock %}

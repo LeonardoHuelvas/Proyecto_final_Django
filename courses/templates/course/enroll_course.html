@@ -1,0 +1,21 @@
+{% extends 'index.html' %} {% block title %} Inscribirse en {{ course.title }} {% endblock %} {% block content %}
+<div class="container">
+    <h1 class="my-4">Inscribirse en {{ course.title }}</h1>
+    <div class="card">
+        <div class="card-body">
+            {% if enrollment and enrollment.is_enrolled %}
+            <p>Ya estás inscrito en este curso.</p>
+            <a href="{% url 'course_list' %}" class="btn btn-secondary">Volver a la lista de cursos</a> {% else %}
+            <form method="post">
+                {% csrf_token %} {{ form.as_p }}
+
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="submit" class="btn btn-primary">Inscribirse</button>
+                    <a href="{% url 'course_list' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

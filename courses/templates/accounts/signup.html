@@ -1,0 +1,10 @@
+{% extends 'index.html' %} {% load custom_filters %} {% load static %} {% block content %}
+
+<body>
+    <h2>Regístrese</h2>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Signup</button>
+    </form>
+</body>
+{% endblock %}

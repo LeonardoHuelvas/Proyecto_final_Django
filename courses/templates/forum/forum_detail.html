@@ -1,0 +1,50 @@
+{% extends 'index.html' %} {% load static %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ forum.title }}</h1>
+        <p>Curso: {{ forum.course.title }}</p>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Publicaciones</h6>
+                </div>
+                <div class="card-body">
+                    {% for post in posts %}
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="{% if post.created_by.profile_picture %}{{ post.created_by.profile_picture.url }}{% else %}{% static 'img/undraw_profile.svg' %}{% endif %}" alt="" width="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ post.created_by.username }}</h5>
+                            <p>{{ post.content }}</p>
+                            <small class="text-muted">Publicado en {{ post.created_at }}</small>
+                        </div>
+                    </div>
+                    <hr> {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Post Form Section -->
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Nueva Publicación</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'forum_detail' forum.pk %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ post_form.content }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Publicar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

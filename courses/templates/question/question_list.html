@@ -1,0 +1,18 @@
+{% extends 'index.html' %} {% block title %}Lista de Preguntas{% endblock %} {% block content %}
+<div class="container">
+    <h1>Preguntas para el examen: {{ exam.title }}</h1>
+    <ul class="list-group">
+        {% for question in questions %}
+        <li class="list-group-item">
+            <a href="{% url 'question_detail' exam.id question_number=forloop.counter %}">{{ question.text }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'course_detail' exam.course.id %}" class="btn btn-secondary btn-icon-split mt-3">
+        <span class="icon text-white-50">
+            <i class="fas fa-arrow-left"></i>
+        </span>
+        <span class="text">Volver al Curso</span>
+    </a>
+</div>
+{% endblock %}

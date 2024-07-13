@@ -1,0 +1,35 @@
+{% extends 'index.html' %} {% block title %}Confirmar Eliminación{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Confirmar Eliminación</h1>
+    <p class="mb-4">¿Estás seguro de que deseas eliminar este material?</p>
+
+    <!-- Confirm Delete Form -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-danger">Eliminar Material</h6>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <p>Título: {{ material.title }}</p>
+                <p>Curso: {{ material.course.title }}</p>
+                <p>Tipo de Archivo: {{ material.file_type }}</p>
+                <p>Fecha de Subida: {{ material.uploaded_at }}</p>
+                <button type="submit" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="text">Eliminar</span>
+                </button>
+                <a href="{% url 'material_list' %}" class="btn btn-secondary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="text">Cancelar</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

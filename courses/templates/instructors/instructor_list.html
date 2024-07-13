@@ -1,0 +1,58 @@
+{% extends 'index.html' %} {% block title %}Lista de Instructores{% endblock %} {% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Lista de Instructores</h1>
+    <p class="mb-4">Aquí puedes ver todos los instructores registrados en la plataforma.</p>
+
+    <!-- Instructor List -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Instructores</h6>
+            <a href="{% url 'instructor_add' %}" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Agregar Instructor</span>
+            </a>
+        </div>
+        <div class="card-body">
+            {% if instructors %}
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nombre Instructor</th>
+                            <th>Correo Electrónico</th>
+                            <th>Fecha de Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instructor in instructors %}
+                        <tr>
+                            <td>{{ instructor.get_full_name }}</td>
+                            <td>{{ instructor.email }}</td>
+                            <td>{{ instructor.date_joined }}</td>
+                            <td>
+                                <a href="{% url 'instructor_detail' instructor.pk %}" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'instructor_edit' instructor.pk %}" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'instructor_delete' instructor.pk %}" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No hay instructores disponibles.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

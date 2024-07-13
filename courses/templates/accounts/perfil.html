@@ -1,0 +1,33 @@
+{% extends "index.html" %} {% load static %} {% block title %}Perfil de Usuario{% endblock %} {% block content %}
+<div class="container">
+    <h1 class="h3 mb-4 text-gray-800">Perfil de Usuario</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Información Personal</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" value="{{ user.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label> {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="first_name">Nombre:</label> {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Apellido:</label> {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    <label for="profile_picture">Foto de Perfil:</label> {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" width="150"> {% endif %} {{ form.profile_picture }}
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
