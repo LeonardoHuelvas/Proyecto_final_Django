@@ -1,7 +1,7 @@
 {% extends "index.html" %} {% block title %}Dashboard del Estudiante{% endblock %} {% block content %}
 <style>
     .container {
-        max-width: 1000px;
+        max-width: 100%;
         margin: 0 auto;
         padding: 20px;
     }
@@ -10,29 +10,33 @@
         border: none;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 10px;
+        /* reduced from 20px */
         transition: transform 0.2s, box-shadow 0.2s;
     }
     
     .card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     
     .card img {
-        width: 100%;
-        height: 150PX;
+        width: 40px;
+        height: 40px;
         object-fit: cover;
+        border-radius: 50%;
+        margin: 10px;
     }
     
     .card-body {
-        padding: 15px;
+        padding: 10px;
+        /* reduced from 15px */
         text-align: center;
     }
     
     .card-title {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         margin-bottom: 10px;
         font-weight: bold;
         color: #333;
@@ -41,7 +45,7 @@
     .card-text {
         font-size: 0.9rem;
         margin-bottom: 15px;
-        height: 50px;
+        height: 40px;
         overflow: hidden;
         color: #666;
     }
@@ -73,12 +77,8 @@
         {% for course in enrolled_courses %}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
-                <div class="card-img-top">
-                    {% if course.image %}
-                    <img src="{{ course.image.url }}" class="card-img" alt="{{ course.title }}"> {% elif course.get_youtube_thumbnail %}
-                    <img src="{{ course.get_youtube_thumbnail }}" class="card-img" alt="{{ course.title }}"> {% endif %}
-                </div>
                 <div class="card-body">
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}" class="mr-3">
                     <h5 class="card-title">{{ course.title }}</h5>
                     <p class="card-text">{{ course.description|truncatewords:20 }}</p>
                     <a href="{% url 'course_detail' course.pk %}" class="btn btn-primary">Ver Curso</a>
@@ -93,6 +93,6 @@
         </div>
         {% endfor %}
     </div>
-    <a href="{% url 'course_list' %}" class="btn btn-primary mt-3">Ver Todos los Cursos</a>
+    <a href="{% url 'index' %}" class="btn btn-primary mt-3">Cursos Disponibles</a>
 </div>
 {% endblock %}

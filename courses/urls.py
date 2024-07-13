@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import ExamDeleteView, ExamDetailView, ExamResultView, ExamViewSet, QuestionView,   SignupView, MyLoginView, MyLogoutView, CrearExamenView, admin_panel, delete_all_enrollments, ForumListView, ForumCreateView, ForumDetailView, PostCreateView
+from .views import ExamDeleteView, ExamDetailView, ExamResultView, ExamUpdateView, ExamViewSet, QuestionView,   SignupView, MyLoginView, MyLogoutView, CrearExamenView, admin_panel, delete_all_enrollments, ForumListView, ForumCreateView, ForumDetailView, PostCreateView
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -59,10 +59,11 @@ urlpatterns = [
 
     # Rutas para exámenes
     path('course/<int:course_id>/exam/create/', CrearExamenView.as_view(), name='crear_examen'),
-    path('exam/<int:exam_id>/delete/', ExamDeleteView.as_view(), name='exam_delete'),
+    path('exam/<int:pk>/delete/', ExamDeleteView.as_view(), name='exam_delete'),
     path('exam/<int:pk>/', ExamDetailView.as_view(), name='exam_detail'),
     path('exam/<int:exam_id>/result/', ExamResultView.as_view(), name='exam_result'),
     path('exam/<int:exam_id>/question/<int:question_number>/', QuestionView.as_view(), name='question_detail'),
+    path('exam/<int:pk>/edit/', ExamUpdateView.as_view(), name='exam_edit'),
  
  
  

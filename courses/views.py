@@ -276,7 +276,15 @@ class CrearExamenView(LoginRequiredMixin, UserPassesTestMixin, View):
                 'course': course,
                 'exam_form': exam_form
             })
-            
+
+
+
+class ExamUpdateView(UpdateView):
+    model = Exam
+    fields = ['title', 'total_marks']
+    template_name = 'exam/exam_edit.html'
+    success_url = reverse_lazy('index')
+                
             
 class QuestionView(View):
     template_name = 'question/question_detail.html'
