@@ -147,4 +147,8 @@ Licencia
 Este proyecto está bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
 Contacto
 
+<<<<<<< HEAD
 Para cualquier consulta o soporte, por favor contacta a lejhubo01@hotmail.com.
+=======
+Para cualquier consulta o soporte, por favor contacta a lejhubo01@hotmail.com.
+>>>>>>> 774fea723daa82add13ed3ec50ceb5e2baa714aa
