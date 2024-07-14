@@ -12,8 +12,7 @@
     <div class="mt-3">
         {% if question_number > 1 %}
         <a href="{% url 'question_detail' exam.id question_number|add:'-1' %}" class="btn btn-secondary">Anterior</a> {% endif %} 
-		{% if question_number < total_questions %}
-         <a href="{% url 'question_detail' exam.id question_number|add:'1' %}" class="btn btn-secondary">Siguiente</a>
+		{% if question_number < total_questions %} <a href="{% url 'question_detail' exam.id question_number|add:'1' %}" class="btn btn-secondary">Siguiente</a>
             {% endif %}
     </div>
 </div>

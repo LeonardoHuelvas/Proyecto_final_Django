@@ -6,6 +6,7 @@ class SignupForm(UserCreationForm):
     """
     Formulario para el registro de nuevos usuarios.
     """
+
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
@@ -56,7 +57,7 @@ class CourseForm(forms.ModelForm):
         """
         start_date = self.cleaned_data.get('start_date')
         end_date = self.cleaned_data.get('end_date')
-        if end_date < start_date:
+        if end_date and start_date and end_date < start_date:
             raise forms.ValidationError("La fecha de finalización no puede ser anterior a la fecha de inicio.")
         return end_date
 
@@ -135,34 +136,48 @@ class ExamForm(forms.ModelForm):
         model = Exam
         fields = ['title', 'total_marks']
 
-
-
 class QuestionForm(forms.ModelForm):
+    """
+    Formulario para la creación y edición de preguntas de exámenes.
+    """
     class Meta:
         model = Question
         fields = ['text', 'question_type']
 
 class AnswerForm(forms.Form):
+    """
+    Formulario para la selección de respuestas en los exámenes.
+    """
     answer = forms.ChoiceField(widget=forms.RadioSelect)
 
     def __init__(self, *args, **kwargs):
+        """
+        Inicializa el formulario de respuestas con las opciones disponibles.
+        """
         question = kwargs.pop('question')
         super().__init__(*args, **kwargs)
         self.fields['answer'].choices = [(answer.id, answer.text) for answer in question.answers.all()]
         
-        
 class ForumForm(forms.ModelForm):
+    """
+    Formulario para la creación y edición de foros.
+    """
     class Meta:
         model = Forum
         fields = ['title']
 
 class PostForm(forms.ModelForm):
+    """
+    Formulario para la creación y edición de publicaciones en los foros.
+    """
     class Meta:
         model = Post
         fields = ['content']
-        
-        
+
 class UserProfileForm(UserChangeForm):
+    """
+    Formulario para la actualización del perfil de usuario.
+    """
     password = None  # Excluir el campo de contraseña
 
     class Meta:

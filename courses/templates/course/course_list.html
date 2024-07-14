@@ -1,10 +1,40 @@
-{% extends 'index.html' %} {% block title %}Lista de Cursos{% endblock %} {% block content %}{% load static %}
+{% extends 'index.html' %} {% block title %}Lista de Cursos{% endblock %} {% block content %} {% load static %}
+<style>
+    .card img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 10px;
+    }
+    
+    .card-body {
+        padding: 10px;
+        /* reduced from 15px */
+        text-align: center;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .card-text {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        height: 40px;
+        overflow: hidden;
+        color: #666;
+    }
+</style>
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Lista de Cursos</h1>
     <p class="mb-4">Aquí puedes ver todos los cursos disponibles.</p>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Cursos</h6>
             <a href="{% url 'agregar_curso' %}" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
@@ -14,9 +44,14 @@
             </a>
         </div>
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4 offset-md-8">
+                    <input type="text" id="courseSearch" class="form-control" placeholder="Buscar cursos...">
+                </div>
+            </div>
             {% if courses %}
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="courseTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Miniatura</th>
@@ -30,9 +65,9 @@
                         {% for course in courses %}
                         <tr>
                             <td>
-                                {% if course.materials.first.thumbnail %}
-                                <img src="{{ course.materials.first.thumbnail.url }}" alt="Miniatura" width="100">
-                                <!--LLLLL -->{% endif %}
+                                {% if course.image %}
+                                <img src="{{ course.image.url }}" alt="Miniatura" width="100"> {% else %}
+                                <img src="{% static 'img/default_thumbnail.png' %}" alt="Miniatura" width="100"> {% endif %}
                             </td>
                             <td>{{ course.title }}</td>
                             <td>{{ course.description }}</td>
@@ -59,4 +94,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('courseSearch').addEventListener('keyup', function() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById('courseSearch');
+        filter = input.value.toUpperCase();
+        table = document.getElementById('courseTable');
+        tr = table.getElementsByTagName('tr');
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = 'none';
+            td = tr[i].getElementsByTagName('td');
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = '';
+                        break;
+                    }
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

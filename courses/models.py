@@ -136,9 +136,6 @@ class Enrollment(models.Model):
         return self.status == 'inscrito'
 
 class Material(models.Model):
-    """
-    Modelo para los materiales del curso.
-    """
     title = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='materials')
     file_type = models.CharField(max_length=50)
@@ -152,9 +149,13 @@ class Material(models.Model):
         Extrae el ID de YouTube de una URL.
         """
         if "youtube.com" in url:
-            return url.split("v=")[1].split("&")[0]
+            parts = url.split("v=")
+            if len(parts) > 1:
+                return parts[1].split("&")[0]
         elif "youtu.be" in url:
-            return url.split("/")[-1]
+            parts = url.split("/")
+            if len(parts) > 1:
+                return parts[-1]
         return None
 
     @property
@@ -171,6 +172,7 @@ class Exam(models.Model):
     title = models.CharField(max_length=200)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='exams')
     total_marks = models.IntegerField()
+    duration = models.IntegerField(default=15)  
 
     def __str__(self):
         return self.title
@@ -200,7 +202,9 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
-
+    
+    
+from django.utils import timezone
 class Grade(models.Model):
     """
     Modelo para almacenar las calificaciones de los estudiantes.
@@ -208,6 +212,8 @@ class Grade(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'student'})
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     marks_obtained = models.IntegerField()
+    start_time = models.DateTimeField(auto_now_add=True) 
+    
 
     def __str__(self):
         return f"{self.student.username}: {self.marks_obtained} en {self.exam.title}"

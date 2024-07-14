@@ -1,6 +1,16 @@
+"""
+urls.py
+
+Este archivo contiene las rutas de URL para la aplicación de cursos en línea. Incluye rutas para gestionar cursos, materiales, instructores, autenticación, exámenes y foros, así como las rutas de API proporcionadas por Django Rest Framework.
+"""
+
 from django.urls import path
 from . import views
-from .views import ExamDeleteView, ExamDetailView, ExamResultView, ExamUpdateView, ExamViewSet, QuestionView,   SignupView, MyLoginView, MyLogoutView, CrearExamenView, admin_panel, delete_all_enrollments, ForumListView, ForumCreateView, ForumDetailView, PostCreateView
+from .views import (
+    ExamDeleteView, ExamDetailView, ExamResultView, ExamResultsView, ExamUpdateView, ExamViewSet, QuestionView, 
+    SignupView, MyLoginView, MyLogoutView, CrearExamenView, admin_panel, delete_all_enrollments, 
+    ForumListView, ForumCreateView, ForumDetailView, PostCreateView
+)
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -55,7 +65,6 @@ urlpatterns = [
     path('admin/dashboard/', views.AdminDashboardView.as_view(), name='admin_dashboard'),
     path('instructors/dashboard/', views.InstructorDashboardView.as_view(), name='instructor_dashboard'),
     path('students/dashboard/', views.StudentDashboardView.as_view(), name='student_dashboard'),
-    
 
     # Rutas para exámenes
     path('course/<int:course_id>/exam/create/', CrearExamenView.as_view(), name='crear_examen'),
@@ -64,10 +73,8 @@ urlpatterns = [
     path('exam/<int:exam_id>/result/', ExamResultView.as_view(), name='exam_result'),
     path('exam/<int:exam_id>/question/<int:question_number>/', QuestionView.as_view(), name='question_detail'),
     path('exam/<int:pk>/edit/', ExamUpdateView.as_view(), name='exam_edit'),
- 
- 
- 
-    
+    path('exam-results/', ExamResultsView.as_view(), name='exam_results'),
+
     # Rutas para foros
     path('course/<int:course_id>/foros/', ForumListView.as_view(), name='forum_list'),
     path('course/<int:course_id>/foros/crear/', ForumCreateView.as_view(), name='forum_create'),

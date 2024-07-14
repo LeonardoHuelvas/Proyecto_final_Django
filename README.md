@@ -1,157 +1,150 @@
-# Plataforma de Cursos en Línea
-
-## Descripción
+Plataforma de Cursos en Línea
+Descripción
 
 Este proyecto es una plataforma de cursos en línea que permite a los usuarios inscribirse en cursos, ver material educativo y realizar exámenes. Los instructores pueden crear, editar y eliminar cursos, así como subir material y diseñar exámenes. Está construido utilizando Django y Django Rest Framework.
+Características
+Usuarios
 
-## Características
+    📝 Registro e inicio de sesión.
+    📚 Inscripción en cursos.
+    🎓 Visualización de material educativo.
+    📝 Realización de exámenes.
 
-### Usuarios
+Instructores
 
-- Registro e inicio de sesión.
-- Inscripción en cursos.
-- Visualización de material educativo.
-- Realización de exámenes.
+    📚 Creación, edición y eliminación de cursos.
+    📂 Subida de material educativo.
+    📝 Diseño de exámenes con preguntas de tipo texto y selección múltiple.
 
-### Instructores
+Administradores
 
-- Creación, edición y eliminación de cursos.
-- Subida de material educativo.
-- Diseño de exámenes con preguntas de tipo texto y selección múltiple.
+    🛠️ Gestión de usuarios.
+    🛠️ Gestión de cursos y material educativo.
+    🛠️ Gestión de exámenes y preguntas.
 
-### Administradores
+Instalación
+Prerrequisitos
 
-- Gestión de usuarios.
-- Gestión de cursos y material educativo.
-- Gestión de exámenes y preguntas.
+    🐍 Python 3.8 o superior
+    🛠️ Git
 
-## Instalación
+Pasos
 
-### Prerrequisitos
+    Clona el repositorio:
 
-- Python 3.8 o superior
-- Git
+    bash
 
-### Pasos
+git clone https://github.com/tu_usuario/tu_repositorio.git
+cd tu_repositorio
 
-1. **Clona el repositorio**:
+Crea un entorno virtual y actívalo:
 
-    ```bash
-    git clone https://github.com/tu_usuario/tu_repositorio.git
-    cd tu_repositorio
-    ```
+bash
 
-2. **Crea un entorno virtual y actívalo**:
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
 
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # En Windows: venv\Scripts\activate
-    ```
+Instala las dependencias:
 
-3. **Instala las dependencias**:
+bash
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+pip install -r requirements.txt
 
-4. **Realiza las migraciones de la base de datos**:
+Realiza las migraciones de la base de datos:
 
-    ```bash
-    python manage.py makemigrations
-    python manage.py migrate
-    ```
+bash
 
-5. **Crea un superusuario para acceder al panel de administración**:
+python manage.py makemigrations
+python manage.py migrate
 
-    ```bash
-    python manage.py createsuperuser
-    ```
+Crea un superusuario para acceder al panel de administración:
 
-6. **Ejecuta el servidor de desarrollo**:
+bash
 
-    ```bash
-    python manage.py runserver
-    ```
+python manage.py createsuperuser
 
-7. **Accede a la aplicación en tu navegador**:
+Ejecuta el servidor de desarrollo:
 
-    ```
+bash
+
+python manage.py runserver
+
+Accede a la aplicación en tu navegador:
+
+arduino
+
     http://127.0.0.1:8000/
-    ```
 
-## Uso
+Uso
+Usuarios
 
-### Usuarios
+    📝 Regístrate e inicia sesión.
+    📚 Inscríbete en cursos disponibles.
+    🎓 Visualiza el material educativo del curso en el que estás inscrito.
+    📝 Realiza exámenes y consulta tus resultados.
+    📝 Solo los admin pueden crear instructores.
 
-1. Regístrate e inicia sesión.
-2. Inscríbete en cursos disponibles.
-3. Visualiza el material educativo del curso en el que estás inscrito.
-4. Realiza exámenes y consulta tus resultados.
+Instructores
 
+    📝 Inicia sesión como instructor.
+    📚 Crea, edita y elimina cursos.
+    📂 Sube material educativo para tus cursos.
+    📝 Diseña exámenes y agrega preguntas.
 
-### Instructores
+Administradores
 
-1. Inicia sesión como instructor.
-2. Crea, edita y elimina cursos.
-3. Sube material educativo para tus cursos.
-4. Diseña exámenes y agrega preguntas.
+    🛠️ Inicia sesión como administrador.
+    🛠️ Gestiona usuarios, cursos, materiales y exámenes desde el panel de administración.
 
-### Administradores
+Estructura del Proyecto
 
-1. Inicia sesión como administrador.
-2. Gestiona usuarios, cursos, materiales y exámenes desde el panel de administración.
-
-## Estructura del Proyecto
+plaintext
 
 .
 ├── courses/
-│ ├── migrations/
-│ ├── static/
-│ ├── templates/
-│ ├── init.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── forms.py
-│ ├── models.py
-│ ├── tests.py
-│ ├── urls.py
-│ └── views.py
+│   ├── migrations/
+│   ├── static/
+│   ├── templates/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 ├── online_courses/
-│ ├── init.py
-│ ├── asgi.py
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
 ├── manage.py
 ├── requirements.txt
 └── README.md
 
+    courses/: Aplicación principal que contiene los modelos, vistas, formularios y plantillas.
+    online_courses/: Configuración principal del proyecto.
+    static/: Archivos estáticos como CSS, JS e imágenes.
+    templates/: Plantillas HTML para la aplicación.
+    manage.py: Script para la gestión del proyecto.
+    requirements.txt: Archivo con las dependencias del proyecto.
 
+Modelos Principales
 
-- `courses/`: Aplicación principal que contiene los modelos, vistas, formularios y plantillas.
-- `online_courses/`: Configuración principal del proyecto.
-- `static/`: Archivos estáticos como CSS, JS e imágenes.
-- `templates/`: Plantillas HTML para la aplicación.
-- `manage.py`: Script para la gestión del proyecto.
-- `requirements.txt`: Archivo con las dependencias del proyecto.
+    Course: Modelo para los cursos.
+    Material: Modelo para el material educativo de los cursos.
+    Exam: Modelo para los exámenes de los cursos.
+    Question: Modelo para las preguntas de los exámenes.
+    Answer: Modelo para las respuestas de las preguntas.
+    Grade: Modelo para almacenar las calificaciones de los estudiantes.
 
-## Modelos Principales
-
-- **Course**: Modelo para los cursos.
-- **Material**: Modelo para el material educativo de los cursos.
-- **Exam**: Modelo para los exámenes de los cursos.
-- **Question**: Modelo para las preguntas de los exámenes.
-- **Answer**: Modelo para las respuestas de las preguntas.
-- **Grade**: Modelo para almacenar las calificaciones de los estudiantes.
-
-## Contribuciones
+Contribuciones
 
 Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
+Licencia
 
-## Licencia
+Este proyecto está bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
+Contacto
 
-Este proyecto está bajo la licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## Contacto
-
-Para cualquier consulta o soporte, por favor contacta a [lejhubo01@hotmail.com](mailto:lejhubo01@hotmail.com).
+Para cualquier consulta o soporte, por favor contacta a lejhubo01@hotmail.com.

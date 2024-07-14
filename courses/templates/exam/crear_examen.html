@@ -62,8 +62,10 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-secondary mb-3" id="add_question_btn">Agregar Otra Pregunta</button>
-                <button type="submit" class="btn btn-primary">Guardar Examen</button>
+                <div class="button-container mt-4">
+                    <button type="button" class="btn btn-secondary" id="add_question_btn">Agregar Otra Pregunta</button>
+                    <button type="submit" class="btn btn-primary ml-2">Guardar Examen</button>
+                </div>
             </form>
         </div>
     </div>
@@ -86,7 +88,7 @@
         var questionIndex = container.querySelectorAll('.form-group').length / 2;
 
         var questionHtml = `
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <label for="id_question_text_${questionIndex}">Texto de la Pregunta:</label>
                 <input type="text" class="form-control" id="id_question_text_${questionIndex}" name="question_text" placeholder="Texto de la Pregunta">
             </div>
@@ -143,4 +145,16 @@
         });
     });
 </script>
+
+<style>
+    .button-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .button-container .btn {
+        margin-right: 10px;
+    }
+</style>
 {% endblock %}
