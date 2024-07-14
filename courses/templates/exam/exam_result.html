@@ -1,8 +1,8 @@
-{% extends 'index.html' %} {% block title %}Resultados del Examen{% endblock %} {% block content %}
+{% extends "index.html" %} {% block title %}Resultados del Examen{% endblock %} {% block content %}
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Resultados del Examen: {{ exam.title }}</h1>
-    <p class="mb-4">Aquí puedes ver los resultados del examen.</p>
+    <p class="mb-4">Aquí puedes ver los resultados de tu examen.</p>
 
     <!-- Exam Result -->
     <div class="card shadow mb-4">
@@ -15,18 +15,25 @@
                     <thead>
                         <tr>
                             <th>Nombre del Estudiante</th>
+                            <th>Curso</th>
+                            <th>Examen</th>
                             <th>Calificación Obtenida</th>
                             <th>Calificación Total</th>
                             <th>Fecha del Examen</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for grade in grades %}
                         <tr>
                             <td>{{ grade.student.username }}</td>
+                            <td>{{ grade.exam.course.title }}</td>
+                            <td>{{ grade.exam.title }}</td>
                             <td>{{ grade.marks_obtained }}</td>
-                            <td>{{ exam.total_marks }}</td>
+                            <td>{{ grade.exam.total_marks }}</td>
                             <td>{{ grade.exam.created_at }}</td>
+
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

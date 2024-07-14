@@ -633,24 +633,22 @@ class ExamDetailView(LoginRequiredMixin, DetailView):
 
 
 
-
 class ExamResultView(View):
     template_name = 'exam/exam_result.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         exam = get_object_or_404(Exam, pk=kwargs['exam_id'])  
-        try:
-            grade = Grade.objects.get(student=request.user, exam=exam)
-        except Grade.DoesNotExist:
+        grades = Grade.objects.filter(student=request.user, exam=exam)
+
+        if not grades.exists():
             messages.error(request, 'No se ha encontrado el resultado del examen.')
             return redirect('exam_detail', pk=exam.id) 
 
         return render(request, self.template_name, {
             'exam': exam,
-            'grade': grade,
+            'grades': grades,
         })
-
 
 
 class ExamDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
