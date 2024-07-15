@@ -414,6 +414,8 @@ class ExamUpdateView(UpdateView):
     success_url = reverse_lazy('index')
 
 
+from django.utils.dateparse import parse_datetime
+
 class QuestionView(View):
     """
     Vista para mostrar una pregunta de un examen.
@@ -447,6 +449,8 @@ class QuestionView(View):
         if not start_time:
             start_time = timezone.now()
             request.session[f'exam_{exam.id}_start_time'] = start_time.isoformat()
+        else:
+            start_time = parse_datetime(start_time)
 
         remaining_time = exam.duration - (timezone.now() - start_time).seconds // 60
         if remaining_time <= 0:
